@@ -4,20 +4,13 @@ use Invisnik\LaravelSteamAuth\LightOpenID;
 
 class SteamAuth implements SteamAuthInterface {
 
-    /**
-     * @var LightOpenID
-     */
     private $OpenID;
 
-    /**
-     * @var string|bool
-     */
     public $SteamID = false;
 
-    /**
-     * @var string
-     */
     public $redirect_url;
+
+    public $steamInfo;
 
     public function __construct()
     {
@@ -27,9 +20,6 @@ class SteamAuth implements SteamAuthInterface {
         $this->init();
     }
 
-    /**
-     *  Initialization
-     */
     private function init()
     {
         if($this->OpenID->mode == 'cancel'){
@@ -40,54 +30,50 @@ class SteamAuth implements SteamAuthInterface {
 
             if($this->OpenID->validate()){
 
+                $steamid64 = str_replace('http://steamcommunity.com/openid/id/', '', $this->OpenID->identity);
+
+                if ($steamid64)
+                {
+                    $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . \Config::get('steam-auth.steam_api_key') . '&steamids=' . $steamid64);
+                    $json = json_decode($json, true);
+                    $user = $json["response"]["players"][0];
+
+                    $this->setSteamInfo($user);
+                }
+
                 $this->SteamID = basename($this->OpenID->identity);
 
             }else{
 
-				$this->SteamID = false;
+                $this->SteamID = false;
 
             }
 
         }
     }
 
-    /**
-     * Checks the steam login
-     *
-     * @return bool
-     */
     public function validate()
     {
         return $this->SteamID ? true : false;
     }
 
-    /**
-     * Returns the redirect response to login
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function redirect()
     {
         return redirect($this->url());
     }
 
-    /**
-     * Returns the login url
-     *
-     * @return String
-     */
     public function url()
     {
         return $this->OpenID->authUrl();
     }
 
-    /**
-     * Returns the steam id
-     *
-     * @return bool|string
-     */
     public function getSteamId(){
         return $this->SteamID;
+    }
+
+    public function setSteamInfo($user)
+    {
+        $this->steamInfo = $user;
     }
 
 }
