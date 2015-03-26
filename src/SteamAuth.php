@@ -1,12 +1,11 @@
 <?php namespace Invisnik\LaravelSteamAuth;
 
 use Invisnik\LaravelSteamAuth\LightOpenID;
+use Invisnik\LaravelSteamAuth\SteamInfo;
 
 class SteamAuth implements SteamAuthInterface {
 
     private $OpenID;
-
-    public $SteamID = false;
 
     public $redirect_url;
 
@@ -30,22 +29,7 @@ class SteamAuth implements SteamAuthInterface {
 
             if($this->OpenID->validate()){
 
-                $steamid64 = str_replace('http://steamcommunity.com/openid/id/', '', $this->OpenID->identity);
-
-                if ($steamid64)
-                {
-                    $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . \Config::get('steam-auth.steam_api_key') . '&steamids=' . $steamid64);
-                    $json = json_decode($json, true);
-                    $user = $json["response"]["players"][0];
-
-                    $this->setSteamInfo($user);
-                }
-
-                $this->SteamID = basename($this->OpenID->identity);
-
-            }else{
-
-                $this->SteamID = false;
+                $this->steamInfo = new SteamInfo($this->OpenID->identity);
 
             }
 
@@ -65,15 +49,6 @@ class SteamAuth implements SteamAuthInterface {
     public function url()
     {
         return $this->OpenID->authUrl();
-    }
-
-    public function getSteamId(){
-        return $this->SteamID;
-    }
-
-    public function setSteamInfo($user)
-    {
-        $this->steamInfo = $user;
     }
 
 }

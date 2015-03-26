@@ -1,0 +1,251 @@
+<?php
+
+namespace Invisnik\LaravelSteamAuth;
+
+
+/**
+ * Class SteamInfo
+ * @package Invisnik\LaravelSteamAuth
+ */
+class SteamInfo {
+
+    /**
+     * @var
+     */
+    public $id;
+    /**
+     * @var
+     */
+    public $nick;
+    /**
+     * @var
+     */
+    public $lastLogin;
+    /**
+     * @var
+     */
+    public $profileURL;
+    /**
+     * @var
+     */
+    public $profilePicture;
+    /**
+     * @var
+     */
+    public $profilePictureMedium;
+    /**
+     * @var
+     */
+    public $profilePictureFull;
+    /**
+     * @var
+     */
+    public $name;
+    /**
+     * @var
+     */
+    public $clanID;
+    /**
+     * @var
+     */
+    public $createdAt;
+
+    /**
+     * @var
+     */
+    public $all;
+
+
+    function __construct($id)
+    {
+        $this->id = $id;
+
+        $this->getJson(); //Get steamInfo from json and save it to $this->all
+        $this->setId($this->all["steamid"]);
+        $this->setNick($this->all["personaname"]);
+        $this->setLastLogin($this->all["lastlogoff"]);
+        $this->setProfileURL($this->all["profileurl"]);
+        $this->setProfilePicture($this->all["avatar"]);
+        $this->setProfilePictureMedium($this->all["avatarmedium"]);
+        $this->setProfilePictureFull($this->all["avatarfull"]);
+        $this->setName($this->all["realname"]);
+        $this->setClanID($this->all["primaryclanid"]);
+        $this->setCreatedAt($this->all["timecreated"]);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    protected function getJson()
+    {
+        $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . \Config::get('steam-auth.steam_api_key') . '&steamids=' . $this->id);
+        $json = json_decode($json, true);
+        $steam = $json["response"]["players"][0];
+
+        $this->all = $steam;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNick()
+    {
+        return $this->nick;
+    }
+
+    /**
+     * @param mixed $nick
+     */
+    public function setNick($nick)
+    {
+        $this->nick = $nick;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param mixed $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileURL()
+    {
+        return $this->profileURL;
+    }
+
+    /**
+     * @param mixed $profileURL
+     */
+    public function setProfileURL($profileURL)
+    {
+        $this->profileURL = $profileURL;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @param mixed $profilePicture
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilePictureMedium()
+    {
+        return $this->profilePictureMedium;
+    }
+
+    /**
+     * @param mixed $profilePictureMedium
+     */
+    public function setProfilePictureMedium($profilePictureMedium)
+    {
+        $this->profilePictureMedium = $profilePictureMedium;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilePictureFull()
+    {
+        return $this->profilePictureFull;
+    }
+
+    /**
+     * @param mixed $profilePictureFull
+     */
+    public function setProfilePictureFull($profilePictureFull)
+    {
+        $this->profilePictureFull = $profilePictureFull;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClanID()
+    {
+        return $this->clanID;
+    }
+
+    /**
+     * @param mixed $clanID
+     */
+    public function setClanID($clanID)
+    {
+        $this->clanID = $clanID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
+
+}
