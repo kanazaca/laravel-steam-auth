@@ -3,6 +3,7 @@
     "description": "Laravel Steam Auth",
     "keywords": ["steam", "laravel", "auth"],
     "license": "MIT",
+    "version": "1.1.0",
     "authors": [
         {
             "name": "Nikita Brytkov",
