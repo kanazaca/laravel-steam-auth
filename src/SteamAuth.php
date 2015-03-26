@@ -1,7 +1,7 @@
-<?php namespace Invisnik\LaravelSteamAuth;
+<?php namespace kanazaca\LaravelSteamAuth;
 
-use Invisnik\LaravelSteamAuth\LightOpenID;
-use Invisnik\LaravelSteamAuth\SteamInfo;
+use kanazaca\LaravelSteamAuth\LightOpenID;
+use kanazaca\LaravelSteamAuth\SteamInfo;
 
 class SteamAuth implements SteamAuthInterface {
 

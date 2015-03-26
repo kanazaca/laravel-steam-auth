@@ -1,4 +1,4 @@
-<?php namespace Invisnik\LaravelSteamAuth;
+<?php namespace kanazaca\LaravelSteamAuth;
 
 use Illuminate\Support\ServiceProvider;
 

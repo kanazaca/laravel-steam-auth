@@ -1,4 +1,4 @@
-<?php namespace Invisnik\LaravelSteamAuth\Facades;
+<?php namespace kanazaca\LaravelSteamAuth\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
