@@ -58,5 +58,5 @@ class SteamController extends Controller {
 	}
 }
 ```
-
-Credits: invisnik
+# Credits
+* invisnik (original maintainer)
