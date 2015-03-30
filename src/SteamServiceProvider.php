@@ -23,10 +23,14 @@ class SteamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['steamauth'] = $this->app->share(function () {
+        $this->app->singleton('kanazaca\LaravelSteamAuth\LightOpenID', function($app)
+        {
             $redirect = Config::get('steam-auth.redirect_url') ?: Config::get('app.url');
-            $openId = new LightOpenID(url($redirect));
-            return new SteamAuth($openId);
+            return new LightOpenID(url($redirect));
+        });
+
+        $this->app['steamauth'] = $this->app->share(function ($app) {
+            return new SteamAuth($app->make('kanazaca\LaravelSteamAuth\LightOpenID'));
         });
     }
 
