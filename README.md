@@ -19,13 +19,6 @@ Add the service provider to `app/config/app.php`, within the `providers` array.
 )
 ```
 
-```php
-'aliases' => array(
-	// ...
-        'SteamAuth' => 'kanazaca\LaravelSteamAuth\Facades\SteamAuth',
-)
-```
-You how have access to the `SteamAuth` facade.
 
 Lastly, publish the config file.
 ```
