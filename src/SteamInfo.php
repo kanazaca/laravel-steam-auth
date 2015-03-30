@@ -1,13 +1,14 @@
 <?php
 
 namespace kanazaca\LaravelSteamAuth;
-
+use Config;
 
 /**
  * Class SteamInfo
- * @package Invisnik\LaravelSteamAuth
+ * @package kanazaca\LaravelSteamAuth
  */
-class SteamInfo {
+class SteamInfo
+{
 
     /**
      * @var
@@ -55,6 +56,8 @@ class SteamInfo {
      */
     public $all;
 
+    const URL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=%s&steamids=%s';
+
 
     function __construct($id)
     {
@@ -79,8 +82,8 @@ class SteamInfo {
      */
     protected function getJson()
     {
-        $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . \Config::get('steam-auth.steam_api_key') . '&steamids=' . $this->id);
-        $json = json_decode($json, true);
+        $json = file_get_contents(sprintf(URL, Config::get('steam-auth.steam_api_key'), $this->id));
+        $json = json_decode($json, TRUE);
         $steam = $json["response"]["players"][0];
 
         $this->all = $steam;
@@ -245,7 +248,6 @@ class SteamInfo {
     {
         $this->createdAt = $createdAt;
     }
-
 
 
 }

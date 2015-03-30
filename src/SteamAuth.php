@@ -1,33 +1,33 @@
 <?php namespace kanazaca\LaravelSteamAuth;
 
-use kanazaca\LaravelSteamAuth\LightOpenID;
-use kanazaca\LaravelSteamAuth\SteamInfo;
+use Config;
 
-class SteamAuth implements SteamAuthInterface {
+class SteamAuth implements SteamAuthInterface
+{
 
     private $OpenID;
-
     public $redirect_url;
-
     public $steamInfo;
+
+    const OPENID_URL = 'https://steamcommunity.com/openid';
 
     public function __construct()
     {
-        $this->redirect_url = \Config::get('steam-auth.redirect_url') ? \Config::get('steam-auth.redirect_url') :  url('/');
+        $this->redirect_url = Config::get('steam-auth.redirect_url');
         $this->OpenID = new LightOpenID($this->redirect_url);
-        $this->OpenID->identity = 'https://steamcommunity.com/openid';
+        $this->OpenID->identity = self::OPENID_URL;
         $this->init();
     }
 
     private function init()
     {
-        if($this->OpenID->mode == 'cancel'){
+        if ($this->OpenID->mode == 'cancel') {
 
-            $this->steamInfo = false;
+            $this->steamInfo = FALSE;
 
-        }else if($this->OpenID->mode){
+        } else if ($this->OpenID->mode) {
 
-            if($this->OpenID->validate()){
+            if ($this->OpenID->validate()) {
 
                 $this->steamInfo = new SteamInfo($this->OpenID->identity);
 
@@ -38,7 +38,7 @@ class SteamAuth implements SteamAuthInterface {
 
     public function validate()
     {
-        return $this->steamInfo ? true : false;
+        return $this->steamInfo ? TRUE : FALSE;
     }
 
     public function redirect()
