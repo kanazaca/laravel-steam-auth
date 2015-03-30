@@ -25,7 +25,7 @@ class SteamServiceProvider extends ServiceProvider
     {
         $this->app['steamauth'] = $this->app->share(function () {
             $redirect = Config::get('steam-auth.redirect_url') ?: Config::get('app.url');
-            $openId = new LightOpenID($redirect);
+            $openId = new LightOpenID(url($redirect));
             return new SteamAuth($openId);
         });
     }
