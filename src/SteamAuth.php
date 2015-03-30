@@ -23,7 +23,7 @@ class SteamAuth implements SteamAuthInterface {
     {
         if($this->OpenID->mode == 'cancel'){
 
-            $this->SteamID = false;
+            $this->steamInfo = false;
 
         }else if($this->OpenID->mode){
 
@@ -38,7 +38,7 @@ class SteamAuth implements SteamAuthInterface {
 
     public function validate()
     {
-        return $this->SteamID ? true : false;
+        return $this->steamInfo ? true : false;
     }
 
     public function redirect()
