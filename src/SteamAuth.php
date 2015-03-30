@@ -1,20 +1,16 @@
 <?php namespace kanazaca\LaravelSteamAuth;
 
-use Config;
-
 class SteamAuth implements SteamAuthInterface
 {
 
     private $OpenID;
-    public $redirect_url;
     public $steamInfo;
 
     const OPENID_URL = 'https://steamcommunity.com/openid';
 
-    public function __construct()
+    public function __construct(LightOpenID $openID)
     {
-        $this->redirect_url = Config::get('steam-auth.redirect_url');
-        $this->OpenID = new LightOpenID($this->redirect_url);
+        $this->OpenID = $openID;
         $this->OpenID->identity = self::OPENID_URL;
         $this->init();
     }

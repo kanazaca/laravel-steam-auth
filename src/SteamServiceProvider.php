@@ -1,8 +1,10 @@
 <?php namespace kanazaca\LaravelSteamAuth;
 
+use Config;
 use Illuminate\Support\ServiceProvider;
 
-class SteamServiceProvider extends ServiceProvider {
+class SteamServiceProvider extends ServiceProvider
+{
 
     /**
      * Bootstrap the application events.
@@ -21,11 +23,11 @@ class SteamServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['steamauth'] = $this->app->share(
-            function () {
-                return new SteamAuth();
-            }
-        );
+        $this->app['steamauth'] = $this->app->share(function () {
+            $redirect = Config::get('steam-auth.redirect_url') ?: Config::get('app.url');
+            $openId = new LightOpenID($redirect);
+            return new SteamAuth($openId);
+        });
     }
 
 }

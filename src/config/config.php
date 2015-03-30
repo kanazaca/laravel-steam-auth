@@ -5,7 +5,7 @@ return [
     /*
      * Redirect url after login
      */
-    'redirect_url' => '',
+    'redirect_url' => '/',
     'steam_api_key' => 'Your Steam API Key'
 
 ];
