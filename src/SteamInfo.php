@@ -13,51 +13,53 @@ class SteamInfo
     /**
      * @var
      */
-    public $id;
+    protected $id;
     /**
      * @var
      */
-    public $nick;
+    protected $nick;
     /**
      * @var
      */
-    public $lastLogin;
+    protected $lastLogin;
     /**
      * @var
      */
-    public $profileURL;
+    protected $profileURL;
     /**
      * @var
      */
-    public $profilePicture;
+    protected $profilePicture;
     /**
      * @var
      */
-    public $profilePictureMedium;
+    protected $profilePictureMedium;
     /**
      * @var
      */
-    public $profilePictureFull;
+    protected $profilePictureFull;
     /**
      * @var
      */
-    public $name;
+    protected $name;
     /**
      * @var
      */
-    public $clanID;
+    protected $clanID;
     /**
      * @var
      */
-    public $createdAt;
+    protected $createdAt;
 
     /**
      * @var
      */
-    public $all;
+    protected $all;
 
-    const URL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=%s&steamids=%s';
-
+    /**
+     * @var string
+     */
+    protected $url = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=%s&steamids=%s';
 
     function __construct($id)
     {
@@ -82,7 +84,7 @@ class SteamInfo
      */
     protected function getJson()
     {
-        $json = file_get_contents(sprintf(URL, Config::get('steam-auth.steam_api_key'), $this->id));
+        $json = file_get_contents(sprintf($this->url, Config::get('steam-auth.steam_api_key'), $this->id));
         $json = json_decode($json, TRUE);
         $steam = $json["response"]["players"][0];
 
