@@ -10,7 +10,7 @@ use Config;
  */
 class SteamInfo
 {
-    protected $steamID;
+    protected $steamID64;
     protected $nick;
     protected $lastLogin;
     protected $profileURL;
@@ -24,7 +24,7 @@ class SteamInfo
 
     function __construct($data)
     {
-        $this->steamID              = $data["steamid"];
+        $this->steamID64            = $data["steamid"];
         $this->nick                 = $data["personaname"];
         $this->lastLogin            = $data["lastlogoff"];
         $this->profileURL           = $data["profileurl"];
@@ -40,9 +40,24 @@ class SteamInfo
     /**
      * @return mixed
      */
+    public function getSteamID64()
+    {
+        return $this->steamID64;
+    }
+
+    /**
+     * Converts SteamID64 to SteamID32
+     * @return string
+     */
     public function getSteamID()
     {
-        return $this->steamID;
+        //See if the second number in the steamid (the auth server) is 0 or 1. Odd is 1, even is 0
+        $authserver = bcsub($this->steamID64, '76561197960265728') & 1;
+        //Get the third number of the steamid
+        $authid = (bcsub($this->steamID64, '76561197960265728') - $authserver) / 2;
+
+        //Concatenate the STEAM_ prefix and the first number, which is always 0, as well as colons with the other two numbers
+        return "STEAM_0:$authserver:$authid";
     }
 
     /**
