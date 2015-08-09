@@ -1,5 +1,5 @@
 {
-    "name": "mokujin/laravel-steam-auth",
+    "name": "mokujinsan/laravel-steam-auth",
     "description": "Laravel Steam Auth",
     "keywords": ["steam", "laravel", "auth"],
     "license": "MIT",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "mokujin\\LaravelSteamAuth\\": "src"
+            "mokujinsan\\LaravelSteamAuth\\": "src"
         }
     }
 }
