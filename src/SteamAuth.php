@@ -1,4 +1,4 @@
-<?php namespace mokujin\LaravelSteamAuth;
+<?php namespace mokujinsan\LaravelSteamAuth;
 
 use Config;
 
