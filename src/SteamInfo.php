@@ -1,6 +1,6 @@
 <?php
 
-namespace mokujin\LaravelSteamAuth;
+namespace mokujinsan\LaravelSteamAuth;
 
 use Config;
 
