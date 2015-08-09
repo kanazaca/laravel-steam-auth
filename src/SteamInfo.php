@@ -1,6 +1,6 @@
 <?php
 
-namespace kanazaca\LaravelSteamAuth;
+namespace mokujin\LaravelSteamAuth;
 
 use Config;
 
