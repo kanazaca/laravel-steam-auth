@@ -1,5 +1,5 @@
 {
-    "name": "kanazaca/laravel-steam-auth",
+    "name": "mokujin/laravel-steam-auth",
     "description": "Laravel Steam Auth",
     "keywords": ["steam", "laravel", "auth"],
     "license": "MIT",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "kanazaca\\LaravelSteamAuth\\": "src"
+            "mokujin\\LaravelSteamAuth\\": "src"
         }
     }
 }
