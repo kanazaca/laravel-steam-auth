@@ -1,5 +1,5 @@
 <?php
-namespace kanazaca\LaravelSteamAuth;
+namespace mokujinsan\LaravelSteamAuth;
 
 interface SteamAuthInterface
 {

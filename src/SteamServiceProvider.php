@@ -1,4 +1,4 @@
-<?php namespace kanazaca\LaravelSteamAuth;
+<?php namespace mokujinsan\LaravelSteamAuth;
 
 use Config;
 use Illuminate\Support\ServiceProvider;
@@ -23,14 +23,14 @@ class SteamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('kanazaca\LaravelSteamAuth\LightOpenID', function($app)
+        $this->app->singleton('mokujinsan\LaravelSteamAuth\LightOpenID', function($app)
         {
             $redirect = Config::get('steam-auth.redirect_url') ?: Config::get('app.url');
             return new LightOpenID(url($redirect));
         });
 
         $this->app['steamauth'] = $this->app->share(function ($app) {
-            return new SteamAuth($app->make('kanazaca\LaravelSteamAuth\LightOpenID'));
+            return new SteamAuth($app->make('mokujinsan\LaravelSteamAuth\LightOpenID'));
         });
     }
 
