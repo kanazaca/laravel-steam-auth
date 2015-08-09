@@ -1,5 +1,5 @@
 <?php
-namespace mokujin\LaravelSteamAuth;
+namespace mokujinsan\LaravelSteamAuth;
 
 interface SteamAuthInterface
 {
